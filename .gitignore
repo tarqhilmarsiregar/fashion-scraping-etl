@@ -1,0 +1,5 @@
+.env/
+tests/
+google-sheets-api.json
+products.csv
+submission.txt
