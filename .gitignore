@@ -1,4 +1,5 @@
-.env/
+.env
+venv/
 tests/
 google-sheets-api.json
 products.csv

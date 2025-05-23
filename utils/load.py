@@ -2,6 +2,19 @@ import pandas as pd
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
+
+# Muat variabel lingkungan dari file .env
+load_dotenv()
+
+# Panggil variabel
+SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
+HOST = os.getenv('HOST')
+PORT = os.getenv('PORT')
+DATABASE = os.getenv('DATABASE')
+USER = os.getenv('USER')
+PASSWORD = os.getenv('PASSWORD')
 
 # simpan ke csv
 def load_data_to_csv(DataFrame, filename='products.csv'):
@@ -20,7 +33,12 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 credential = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
-SPREADSHEET_ID = '1KhyBolh7Hoe7Rt1BrOKO9dJuBsHH0ICLVVZVLmlLRfk'
+# Contoh penggunaan
+if SPREADSHEET_ID:
+    print(f"Spreadsheet ID yang dimuat: {SPREADSHEET_ID}")
+else:
+    print("Spreadsheet ID tidak ditemukan di .env")
+
 RANGE_NAME = 'Sheet1!A2:G'
 
 # simpan ke googlesheets
@@ -50,14 +68,8 @@ def load_data_to_googlesheets(DataFrame):
 
 # simpan ke postgresql
 def load_data_to_postgresql(DataFrame):
-    host = 'localhost'
-    port = '5432'
-    database = 'fashion'
-    user = 'pemda'
-    password = 'superpwd'
-
     # Buat connection string SQLAlchemy
-    engine = create_engine(f'postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}')
+    engine = create_engine(f'postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}')
 
     # Keterangan:
     # if_exists:
